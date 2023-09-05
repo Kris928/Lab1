@@ -1,0 +1,63 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Error: Debes proporcionar un archivo como argumento."
+    exit 1
+fi
+
+archivo="$1"
+
+if [ ! -e "$archivo" ]; then
+    echo "Error: El archivo '$archivo' no existe."
+    exit 2
+fi
+
+permisos=$(stat -c "%A" "$archivo")
+
+get_permissions_verbose() {
+    permisos="$1"
+    usuario_permisos="${permisos:1:3}"
+    grupo_permisos="${permisos:4:3}"
+    otros_permisos="${permisos:7:3}"
+
+    echo "Permisos del usuario:"
+    echo "  - Lectura (r): ${usuario_permisos:0:1}"
+    echo "  - Escritura (w): ${usuario_permisos:1:1}"
+    echo "  - Ejecución (x): ${usuario_permisos:2:1}"
+    echo "Permisos del grupo:"
+    echo "  - Lectura (r): ${grupo_permisos:0:1}"
+    echo "  - Escritura (w): ${grupo_permisos:1:1}"
+    echo "  - Ejecución (x): ${grupo_permisos:2:1}"
+
+    echo "Permisos de otros usuarios:"
+    echo "  - Lectura (r): ${otros_permisos:0:1}"
+    echo "  - Escritura (w): ${otros_permisos:1:1}"
+    echo "  - Ejecución (x): ${otros_permisos:2:1}"
+}
+
+get_permissions_verbose "$permisos"
+
+usuario_mascota="Jay"
+grupo="lab1"
+
+if id "$usuario_mascota" &>/dev/null; then
+    echo "El usuario '$usuario_mascota' ya existe."
+else
+    sudo useradd "$usuario_mascota"
+    echo "Se ha creado el usuario '$usuario_mascota'."
+fi
+
+if grep -q "^$grupo:" /etc/group; then
+    echo "El grupo '$grupo' ya existe."
+else
+    sudo groupadd "$grupo"
+    echo "Se ha creado el grupo '$grupo'."
+fi
+
+sudo usermod -aG "$grupo" "$USER"
+
+sudo usermod -aG "$grupo" "$usuario_mascota"
+
+chmod 750 "$0"
+
+
