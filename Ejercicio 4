@@ -1,0 +1,21 @@
+#!/bin/bash
+
+DIRECTORIO="/ruta/al/directorio/a/monitorear"
+
+LOG_FILE="/ruta/al/archivo/de/log/cambios.txt"
+
+if [ ! -d "$DIRECTORIO" ]; then
+  echo "El directorio no existe: $DIRECTORIO"
+  exit 1
+fi
+
+if [ ! -e "$LOG_FILE" ]; then
+  touch "$LOG_FILE"
+fi
+
+inotifywait -m -e create,modify,delete "$DIRECTORIO" |
+while read -r directory_event; do
+  FECHA_HORA=$(date "+%Y-%m-%d %H:%M:%S")
+  
+  echo "$FECHA_HORA - Evento: $directory_event" >> "$LOG_FILE"
+done
