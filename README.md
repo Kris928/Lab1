@@ -1,2 +1,2 @@
-# Lab1
+# Laboratorios 
 Laboratorio 1 (usuarios y permisos) 
