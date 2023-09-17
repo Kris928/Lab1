@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+  echo "Uso: $0 <ID del proceso>"
+  exit 1
+fi
+
+pid="$1"
+
+if ! ps -p "$pid" > /dev/null; then
+  echo "El proceso con ID $pid no existe."
+  exit 1
+fi
