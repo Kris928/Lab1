@@ -11,3 +11,20 @@ if ! ps -p "$pid" > /dev/null; then
   echo "El proceso con ID $pid no existe."
   exit 1
 fi
+
+nombre_proceso=$(ps -o comm= -p "$pid")
+ppid=$(ps -o ppid= -p "$pid")
+usuario_propietario=$(ps -o user= -p "$pid")
+porcentaje_cpu=$(ps -o %cpu= -p "$pid")
+consumo_memoria=$(ps -o %mem= -p "$pid")
+estado=$(ps -o stat= -p "$pid")
+path_ejecutable=$(readlink /proc/"$pid"/exe)
+
+echo "a) Nombre del proceso: $nombre_proceso"
+echo "b) ID del proceso: $pid"
+echo "c) Parent process ID: $ppid"
+echo "d) Usuario propietario: $usuario_propietario"
+echo "e) Porcentaje de uso de CPU: $porcentaje_cpu"
+echo "f) Consumo de memoria: $consumo_memoria"
+echo "g) Estado: $estado"
+echo "h) Path del ejecutable: $path_ejecutable"
