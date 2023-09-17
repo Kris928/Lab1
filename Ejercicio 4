@@ -1,8 +1,8 @@
 #!/bin/bash
 
-DIRECTORIO="/ruta/al/directorio/a/monitorear"
+DIRECTORIO="/home/kris/Descargas"
 
-LOG_FILE="/ruta/al/archivo/de/log/cambios.txt"
+LOG_FILE="/home/kris/lab2/Archivo_Log.txt"
 
 if [ ! -d "$DIRECTORIO" ]; then
   echo "El directorio no existe: $DIRECTORIO"
