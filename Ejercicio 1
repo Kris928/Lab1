@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ $# -ne 1 ]; then
-  echo "Uso: $0 <ID del proceso>"
+  echo "Uso: $0 <3828"
   exit 1
 fi
 
