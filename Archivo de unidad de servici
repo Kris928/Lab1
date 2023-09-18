@@ -1,0 +1,11 @@
+[Unit]
+Description=Servicio de Monitoreo de Cambios en Directorios
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /home/kris/lab2/Ejercicio.sh
+WorkingDirectory=//home/kris/Descargas
+
+[Install]
+WantedBy=multi-user.target 
